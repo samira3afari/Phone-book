@@ -1,1 +1,42 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>لیست مخاطبان</title>
+    <style>
+        body { font-family: tahoma; text-align: center; margin-top: 20px; background: lightcyan; }
+        table { margin: auto; border-collapse: collapse; width: 90%; max-width: 600px; }
+        th, td { border: 1px solid black; padding: 6px; word-break: break-word; }
+        th { background: #ddd; }
+        .delete-btn { background: red; color: white; padding: 4px 8px; text-decoration: none; border-radius: 5px; display: inline-block; }
+        .search-box { margin-bottom: 20px; padding: 8px; width: 80%; max-width: 300px; }
+        .search-btn { padding: 8px 16px; background: blue; color: white; border: none; border-radius: 5px; }
+        .back-link { display: inline-block; margin-top: 20px; padding: 8px 16px; background: orange; text-decoration: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h2>لیست مخاطبان</h2>
+    <form method="get" action="/list">
+        <input type="text" name="q" placeholder="جستجو..." class="search-box" value="{{ query }}">
+        <button type="submit" class="search-btn">جستجو</button>
+    </form>
+    {% if contacts %}
+        <div style="overflow-x: auto;">
+            <table>
+                <tr><th>نام</th><th>شماره</th><th>حذف</th></tr>
+                {% for c in contacts %}
+                <tr>
+                    <td>{{ c.name }}</td>
+                    <td>{{ c.phone }}</td>
+                    <td><a href="/delete?phone={{ c.phone }}" class="delete-btn">حذف</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% else %}
+        <p>هیچ مخاطبی یافت نشد.</p>
+    {% endif %}
+    <br>
+    <a href="/" class="back-link">بازگشت</a>
+</body>
+</html>
